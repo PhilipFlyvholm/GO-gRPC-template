@@ -17,13 +17,7 @@ func (s *SafeTimestamp) MaxInc(otherTime int32) {
 	s.value = int32(timestamp)
 }
 
-func (s *SafeTimestamp) Increment() {
-	s.mu.Lock()
-	s.value++
-	s.mu.Unlock()
-}
-
-func (s *SafeTimestamp) IncrementAndGet() int32 {
+func (s *SafeTimestamp) Increment() int32 {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.value++

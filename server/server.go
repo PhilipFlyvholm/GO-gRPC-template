@@ -42,6 +42,6 @@ func runServer() {
 }
 
 func (s *Service) MessageRPC(ctx context.Context, empty *pb.Empty) (*pb.Message, error) {
-	log.Println("Recieved message request. Timestamp:", timestamp.IncrementAndGet())
+	log.Println("Recieved message request. Timestamp:", timestamp.Increment())
 	return &pb.Message{Message: "Hello world!"}, nil
 }
