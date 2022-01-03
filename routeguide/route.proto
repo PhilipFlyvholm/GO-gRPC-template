@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "./routeguide";
+
+package routeguide;
+
+service Service {
+    rpc MessageRPC(Empty) returns (Message) {}
+}
+
+message Empty {}
+
+message Message{
+    string Message = 1;
+}
