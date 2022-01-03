@@ -8,13 +8,14 @@ service BullyService {
     rpc Election(ElectionRequest) returns (ElectionReply) {}
     rpc Coordinator(CoordinatorRequest) returns (Empty) {}
     rpc AskForLeader(AskRequest) returns (LeaderPort) {}
-    rpc SendHeartbeat(Empty) returns (Empty) {}
+    rpc SendHeartbeat(Heartbeat) returns (Empty) {}
     rpc ShareData(Data) returns (Empty) {}
 }
 
 
 message ElectionRequest {
     int32 requester = 1;
+    int32 timestamp = 2;
 }
 
 message ElectionReply {
@@ -23,6 +24,11 @@ message ElectionReply {
 
 message CoordinatorRequest {
     int32 coordinator = 1;
+    int32 timestamp = 2;
+}
+message Heartbeat{
+    int32 timestamp = 1;
+    int32 fromPort = 2;
 }
 
 message Empty {}
@@ -34,10 +40,12 @@ message LeadershipRequest {
 message LeaderRequest {
     int32 currentLeader = 1;
     int32 lowestPort = 2;
+    int32 timestamp = 3;
 }
 
 message AskRequest {
     int32 status = 1;
+    int32 timestamp = 2;
 }
 
 message LeaderPort {
@@ -50,4 +58,5 @@ message HeartbeatResponse {
 
 message Data {
     int32 currentNum = 1;
+    int32 timestamp = 2;
 }

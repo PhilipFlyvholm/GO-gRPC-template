@@ -21,7 +21,7 @@ type BullyServiceClient interface {
 	Election(ctx context.Context, in *ElectionRequest, opts ...grpc.CallOption) (*ElectionReply, error)
 	Coordinator(ctx context.Context, in *CoordinatorRequest, opts ...grpc.CallOption) (*Empty, error)
 	AskForLeader(ctx context.Context, in *AskRequest, opts ...grpc.CallOption) (*LeaderPort, error)
-	SendHeartbeat(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
+	SendHeartbeat(ctx context.Context, in *Heartbeat, opts ...grpc.CallOption) (*Empty, error)
 	ShareData(ctx context.Context, in *Data, opts ...grpc.CallOption) (*Empty, error)
 }
 
@@ -60,7 +60,7 @@ func (c *bullyServiceClient) AskForLeader(ctx context.Context, in *AskRequest, o
 	return out, nil
 }
 
-func (c *bullyServiceClient) SendHeartbeat(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
+func (c *bullyServiceClient) SendHeartbeat(ctx context.Context, in *Heartbeat, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/routeguide.BullyService/SendHeartbeat", in, out, opts...)
 	if err != nil {
@@ -85,7 +85,7 @@ type BullyServiceServer interface {
 	Election(context.Context, *ElectionRequest) (*ElectionReply, error)
 	Coordinator(context.Context, *CoordinatorRequest) (*Empty, error)
 	AskForLeader(context.Context, *AskRequest) (*LeaderPort, error)
-	SendHeartbeat(context.Context, *Empty) (*Empty, error)
+	SendHeartbeat(context.Context, *Heartbeat) (*Empty, error)
 	ShareData(context.Context, *Data) (*Empty, error)
 	mustEmbedUnimplementedBullyServiceServer()
 }
@@ -103,7 +103,7 @@ func (UnimplementedBullyServiceServer) Coordinator(context.Context, *Coordinator
 func (UnimplementedBullyServiceServer) AskForLeader(context.Context, *AskRequest) (*LeaderPort, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AskForLeader not implemented")
 }
-func (UnimplementedBullyServiceServer) SendHeartbeat(context.Context, *Empty) (*Empty, error) {
+func (UnimplementedBullyServiceServer) SendHeartbeat(context.Context, *Heartbeat) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendHeartbeat not implemented")
 }
 func (UnimplementedBullyServiceServer) ShareData(context.Context, *Data) (*Empty, error) {
@@ -177,7 +177,7 @@ func _BullyService_AskForLeader_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _BullyService_SendHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(Heartbeat)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -189,7 +189,7 @@ func _BullyService_SendHeartbeat_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/routeguide.BullyService/SendHeartbeat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).SendHeartbeat(ctx, req.(*Empty))
+		return srv.(BullyServiceServer).SendHeartbeat(ctx, req.(*Heartbeat))
 	}
 	return interceptor(ctx, in, info, handler)
 }

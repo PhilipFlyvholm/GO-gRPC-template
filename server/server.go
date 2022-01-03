@@ -96,7 +96,7 @@ func sendHeartbeat() {
 			defer _connection.Close()
 
 			bullyServiceClient := pb.NewBullyServiceClient(_connection)
-			_, hearbeatErr := bullyServiceClient.SendHeartbeat(context.Background(), &pb.Empty{})
+			_, hearbeatErr := bullyServiceClient.SendHeartbeat(context.Background(), &pb.Heartbeat{Timestamp: timestamp.Increment()})
 			if hearbeatErr != nil {
 				continue
 			}
@@ -127,6 +127,7 @@ func StartElection() {
 	if leaderPort == listenPort {
 		return
 	}
+	timestamp.Increment()
 	var foundHigherServerToCoordinateElection bool
 	for i := int(serverID); i < len(serverPorts); i++ {
 		if i == int(serverID) {
@@ -140,7 +141,7 @@ func StartElection() {
 		defer _connection.Close()
 
 		bullyServiceClient := pb.NewBullyServiceClient(_connection)
-		response, err := bullyServiceClient.Election(context.Background(), &pb.ElectionRequest{Requester: listenPort})
+		response, err := bullyServiceClient.Election(context.Background(), &pb.ElectionRequest{Requester: listenPort, Timestamp: timestamp.Increment()})
 		if err != nil {
 			continue
 		}
@@ -166,7 +167,7 @@ func SetSelfAsLeader() {
 		}
 		defer _connection.Close()
 		bullyServiceClient := pb.NewBullyServiceClient(_connection)
-		bullyServiceClient.Coordinator(context.Background(), &pb.CoordinatorRequest{Coordinator: listenPort})
+		bullyServiceClient.Coordinator(context.Background(), &pb.CoordinatorRequest{Coordinator: listenPort, Timestamp: timestamp.Increment()})
 		log.Printf("Sent coordinator to %s", address)
 	}
 	log.Printf("I am leader")
@@ -177,7 +178,7 @@ func HasLeader() bool {
 }
 
 func (s *BullyService) Election(ctx context.Context, electionRequest *pb.ElectionRequest) (*pb.ElectionReply, error) {
-	log.Printf("Recieved election request from %d. Timestamp: %d", electionRequest.Requester, timestamp.Increment())
+	log.Printf("Recieved election request from %d. Timestamp: %d", electionRequest.Requester, timestamp.MaxInc(electionRequest.Timestamp))
 	StartElection()
 	return &pb.ElectionReply{Replier: listenPort}, nil
 }
@@ -185,25 +186,25 @@ func (s *BullyService) Election(ctx context.Context, electionRequest *pb.Electio
 func (s *BullyService) Coordinator(ctx context.Context, coordinatorRequest *pb.CoordinatorRequest) (*pb.Empty, error) {
 	leaderPort = coordinatorRequest.Coordinator
 	lastRequestTimeFromLeader = time.Now()
-	log.Println("Recieved coordinator request. Timestamp:", timestamp.Increment(), "New leader:", leaderPort)
+	log.Println("Recieved coordinator request. Timestamp:", timestamp.MaxInc(coordinatorRequest.Timestamp), "New leader:", leaderPort)
 	return &pb.Empty{}, nil
 }
 
 func (s *BullyService) AskForLeader(ctx context.Context, askRequest *pb.AskRequest) (*pb.LeaderPort, error) {
-	log.Println("Recieved message request. Timestamp:", timestamp.Increment())
+	log.Println("Recieved message request. Timestamp:", timestamp.MaxInc(askRequest.Timestamp))
 	if !HasLeader() {
 		return nil, errors.New("no leader selected yet")
 	}
 	return &pb.LeaderPort{LeaderPort: leaderPort}, nil
 }
 
-func (s *BullyService) SendHeartbeat(ctx context.Context, empty *pb.Empty) (*pb.Empty, error) {
-	log.Printf("Recieved heartbeat. Timestamp: %d", timestamp.Increment())
+func (s *BullyService) SendHeartbeat(ctx context.Context, heartbeat *pb.Heartbeat) (*pb.Empty, error) {
+	log.Printf("Recieved heartbeat from %d. Timestamp: %d", heartbeat.FromPort, timestamp.MaxInc(heartbeat.Timestamp))
 	lastRequestTimeFromLeader = time.Now()
 	return &pb.Empty{}, nil
 }
 
 func (s *BullyService) ShareData(ctx context.Context, data *pb.Data) (*pb.Empty, error) {
-	log.Println("Recieved message request. Timestamp:", timestamp.Increment())
+	log.Println("Recieved message request. Timestamp:", timestamp.MaxInc(data.Timestamp))
 	return &pb.Empty{}, nil
 }
