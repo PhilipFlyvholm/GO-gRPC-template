@@ -1,0 +1,1 @@
+wt.exe PowerShell go run .\Replica\Replica.go 0`; split-pane -V PowerShell go run .\Replica\Replica.go 1`; split-pane -V PowerShell go run .\Replica\Replica.go 2`;

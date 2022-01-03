@@ -14,86 +14,230 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ServiceClient is the client API for Service service.
+// BullyServiceClient is the client API for BullyService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ServiceClient interface {
-	MessageRPC(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Message, error)
+type BullyServiceClient interface {
+	Election(ctx context.Context, in *ElectionRequest, opts ...grpc.CallOption) (*ElectionReply, error)
+	Coordinator(ctx context.Context, in *CoordinatorRequest, opts ...grpc.CallOption) (*Empty, error)
+	AskForLeader(ctx context.Context, in *AskRequest, opts ...grpc.CallOption) (*LeaderPort, error)
+	SendHeartbeat(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
+	ShareData(ctx context.Context, in *Data, opts ...grpc.CallOption) (*Empty, error)
 }
 
-type serviceClient struct {
+type bullyServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
-	return &serviceClient{cc}
+func NewBullyServiceClient(cc grpc.ClientConnInterface) BullyServiceClient {
+	return &bullyServiceClient{cc}
 }
 
-func (c *serviceClient) MessageRPC(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Message, error) {
-	out := new(Message)
-	err := c.cc.Invoke(ctx, "/routeguide.Service/MessageRPC", in, out, opts...)
+func (c *bullyServiceClient) Election(ctx context.Context, in *ElectionRequest, opts ...grpc.CallOption) (*ElectionReply, error) {
+	out := new(ElectionReply)
+	err := c.cc.Invoke(ctx, "/routeguide.BullyService/Election", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServiceServer is the server API for Service service.
-// All implementations must embed UnimplementedServiceServer
+func (c *bullyServiceClient) Coordinator(ctx context.Context, in *CoordinatorRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/routeguide.BullyService/Coordinator", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bullyServiceClient) AskForLeader(ctx context.Context, in *AskRequest, opts ...grpc.CallOption) (*LeaderPort, error) {
+	out := new(LeaderPort)
+	err := c.cc.Invoke(ctx, "/routeguide.BullyService/AskForLeader", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bullyServiceClient) SendHeartbeat(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/routeguide.BullyService/SendHeartbeat", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *bullyServiceClient) ShareData(ctx context.Context, in *Data, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/routeguide.BullyService/ShareData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// BullyServiceServer is the server API for BullyService service.
+// All implementations must embed UnimplementedBullyServiceServer
 // for forward compatibility
-type ServiceServer interface {
-	MessageRPC(context.Context, *Empty) (*Message, error)
-	mustEmbedUnimplementedServiceServer()
+type BullyServiceServer interface {
+	Election(context.Context, *ElectionRequest) (*ElectionReply, error)
+	Coordinator(context.Context, *CoordinatorRequest) (*Empty, error)
+	AskForLeader(context.Context, *AskRequest) (*LeaderPort, error)
+	SendHeartbeat(context.Context, *Empty) (*Empty, error)
+	ShareData(context.Context, *Data) (*Empty, error)
+	mustEmbedUnimplementedBullyServiceServer()
 }
 
-// UnimplementedServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedServiceServer struct {
+// UnimplementedBullyServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedBullyServiceServer struct {
 }
 
-func (UnimplementedServiceServer) MessageRPC(context.Context, *Empty) (*Message, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MessageRPC not implemented")
+func (UnimplementedBullyServiceServer) Election(context.Context, *ElectionRequest) (*ElectionReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Election not implemented")
 }
-func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
+func (UnimplementedBullyServiceServer) Coordinator(context.Context, *CoordinatorRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Coordinator not implemented")
+}
+func (UnimplementedBullyServiceServer) AskForLeader(context.Context, *AskRequest) (*LeaderPort, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AskForLeader not implemented")
+}
+func (UnimplementedBullyServiceServer) SendHeartbeat(context.Context, *Empty) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendHeartbeat not implemented")
+}
+func (UnimplementedBullyServiceServer) ShareData(context.Context, *Data) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShareData not implemented")
+}
+func (UnimplementedBullyServiceServer) mustEmbedUnimplementedBullyServiceServer() {}
 
-// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ServiceServer will
+// UnsafeBullyServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BullyServiceServer will
 // result in compilation errors.
-type UnsafeServiceServer interface {
-	mustEmbedUnimplementedServiceServer()
+type UnsafeBullyServiceServer interface {
+	mustEmbedUnimplementedBullyServiceServer()
 }
 
-func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
-	s.RegisterService(&Service_ServiceDesc, srv)
+func RegisterBullyServiceServer(s grpc.ServiceRegistrar, srv BullyServiceServer) {
+	s.RegisterService(&BullyService_ServiceDesc, srv)
 }
 
-func _Service_MessageRPC_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _BullyService_Election_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ElectionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BullyServiceServer).Election(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/routeguide.BullyService/Election",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BullyServiceServer).Election(ctx, req.(*ElectionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BullyService_Coordinator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CoordinatorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BullyServiceServer).Coordinator(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/routeguide.BullyService/Coordinator",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BullyServiceServer).Coordinator(ctx, req.(*CoordinatorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BullyService_AskForLeader_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BullyServiceServer).AskForLeader(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/routeguide.BullyService/AskForLeader",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BullyServiceServer).AskForLeader(ctx, req.(*AskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BullyService_SendHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).MessageRPC(ctx, in)
+		return srv.(BullyServiceServer).SendHeartbeat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/routeguide.Service/MessageRPC",
+		FullMethod: "/routeguide.BullyService/SendHeartbeat",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).MessageRPC(ctx, req.(*Empty))
+		return srv.(BullyServiceServer).SendHeartbeat(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
+func _BullyService_ShareData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Data)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BullyServiceServer).ShareData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/routeguide.BullyService/ShareData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BullyServiceServer).ShareData(ctx, req.(*Data))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// BullyService_ServiceDesc is the grpc.ServiceDesc for BullyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Service_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "routeguide.Service",
-	HandlerType: (*ServiceServer)(nil),
+var BullyService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "routeguide.BullyService",
+	HandlerType: (*BullyServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "MessageRPC",
-			Handler:    _Service_MessageRPC_Handler,
+			MethodName: "Election",
+			Handler:    _BullyService_Election_Handler,
+		},
+		{
+			MethodName: "Coordinator",
+			Handler:    _BullyService_Coordinator_Handler,
+		},
+		{
+			MethodName: "AskForLeader",
+			Handler:    _BullyService_AskForLeader_Handler,
+		},
+		{
+			MethodName: "SendHeartbeat",
+			Handler:    _BullyService_SendHeartbeat_Handler,
+		},
+		{
+			MethodName: "ShareData",
+			Handler:    _BullyService_ShareData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
