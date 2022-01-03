@@ -20,9 +20,9 @@ const _ = grpc.SupportPackageIsVersion7
 type BullyServiceClient interface {
 	Election(ctx context.Context, in *ElectionRequest, opts ...grpc.CallOption) (*ElectionReply, error)
 	Coordinator(ctx context.Context, in *CoordinatorRequest, opts ...grpc.CallOption) (*Empty, error)
-	AskForLeader(ctx context.Context, in *AskRequest, opts ...grpc.CallOption) (*LeaderPort, error)
+	AliveCheck(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
 	SendHeartbeat(ctx context.Context, in *Heartbeat, opts ...grpc.CallOption) (*Empty, error)
-	ShareData(ctx context.Context, in *Data, opts ...grpc.CallOption) (*Empty, error)
+	Increment(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Value, error)
 }
 
 type bullyServiceClient struct {
@@ -51,9 +51,9 @@ func (c *bullyServiceClient) Coordinator(ctx context.Context, in *CoordinatorReq
 	return out, nil
 }
 
-func (c *bullyServiceClient) AskForLeader(ctx context.Context, in *AskRequest, opts ...grpc.CallOption) (*LeaderPort, error) {
-	out := new(LeaderPort)
-	err := c.cc.Invoke(ctx, "/routeguide.BullyService/AskForLeader", in, out, opts...)
+func (c *bullyServiceClient) AliveCheck(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/routeguide.BullyService/AliveCheck", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -69,9 +69,9 @@ func (c *bullyServiceClient) SendHeartbeat(ctx context.Context, in *Heartbeat, o
 	return out, nil
 }
 
-func (c *bullyServiceClient) ShareData(ctx context.Context, in *Data, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/routeguide.BullyService/ShareData", in, out, opts...)
+func (c *bullyServiceClient) Increment(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Value, error) {
+	out := new(Value)
+	err := c.cc.Invoke(ctx, "/routeguide.BullyService/Increment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,9 +84,9 @@ func (c *bullyServiceClient) ShareData(ctx context.Context, in *Data, opts ...gr
 type BullyServiceServer interface {
 	Election(context.Context, *ElectionRequest) (*ElectionReply, error)
 	Coordinator(context.Context, *CoordinatorRequest) (*Empty, error)
-	AskForLeader(context.Context, *AskRequest) (*LeaderPort, error)
+	AliveCheck(context.Context, *Empty) (*Empty, error)
 	SendHeartbeat(context.Context, *Heartbeat) (*Empty, error)
-	ShareData(context.Context, *Data) (*Empty, error)
+	Increment(context.Context, *Empty) (*Value, error)
 	mustEmbedUnimplementedBullyServiceServer()
 }
 
@@ -100,14 +100,14 @@ func (UnimplementedBullyServiceServer) Election(context.Context, *ElectionReques
 func (UnimplementedBullyServiceServer) Coordinator(context.Context, *CoordinatorRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Coordinator not implemented")
 }
-func (UnimplementedBullyServiceServer) AskForLeader(context.Context, *AskRequest) (*LeaderPort, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AskForLeader not implemented")
+func (UnimplementedBullyServiceServer) AliveCheck(context.Context, *Empty) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AliveCheck not implemented")
 }
 func (UnimplementedBullyServiceServer) SendHeartbeat(context.Context, *Heartbeat) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendHeartbeat not implemented")
 }
-func (UnimplementedBullyServiceServer) ShareData(context.Context, *Data) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ShareData not implemented")
+func (UnimplementedBullyServiceServer) Increment(context.Context, *Empty) (*Value, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Increment not implemented")
 }
 func (UnimplementedBullyServiceServer) mustEmbedUnimplementedBullyServiceServer() {}
 
@@ -158,20 +158,20 @@ func _BullyService_Coordinator_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BullyService_AskForLeader_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AskRequest)
+func _BullyService_AliveCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BullyServiceServer).AskForLeader(ctx, in)
+		return srv.(BullyServiceServer).AliveCheck(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/routeguide.BullyService/AskForLeader",
+		FullMethod: "/routeguide.BullyService/AliveCheck",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).AskForLeader(ctx, req.(*AskRequest))
+		return srv.(BullyServiceServer).AliveCheck(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -194,20 +194,20 @@ func _BullyService_SendHeartbeat_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BullyService_ShareData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Data)
+func _BullyService_Increment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BullyServiceServer).ShareData(ctx, in)
+		return srv.(BullyServiceServer).Increment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/routeguide.BullyService/ShareData",
+		FullMethod: "/routeguide.BullyService/Increment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).ShareData(ctx, req.(*Data))
+		return srv.(BullyServiceServer).Increment(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -228,16 +228,16 @@ var BullyService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _BullyService_Coordinator_Handler,
 		},
 		{
-			MethodName: "AskForLeader",
-			Handler:    _BullyService_AskForLeader_Handler,
+			MethodName: "AliveCheck",
+			Handler:    _BullyService_AliveCheck_Handler,
 		},
 		{
 			MethodName: "SendHeartbeat",
 			Handler:    _BullyService_SendHeartbeat_Handler,
 		},
 		{
-			MethodName: "ShareData",
-			Handler:    _BullyService_ShareData_Handler,
+			MethodName: "Increment",
+			Handler:    _BullyService_Increment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

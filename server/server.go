@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"errors"
 	"log"
 	"math/rand"
 	"net"
@@ -23,6 +22,8 @@ var serverID int32
 var leaderPort int32
 var lastRequestTimeFromLeader time.Time
 
+var num int32
+
 type BullyService struct {
 	pb.UnimplementedBullyServiceServer
 }
@@ -30,6 +31,7 @@ type BullyService struct {
 func main() {
 	log.Println("Starting Bully service by the team Fiji (Philip Kristian Møller Flyvholm, Tue Edmund Gyhrs and Thor Tudal Lauridsen")
 	leaderPort = -1
+	num = -1
 	setupServerPort()
 	time.Sleep(10 * time.Second)
 	go runServer()
@@ -96,7 +98,7 @@ func sendHeartbeat() {
 			defer _connection.Close()
 
 			bullyServiceClient := pb.NewBullyServiceClient(_connection)
-			_, hearbeatErr := bullyServiceClient.SendHeartbeat(context.Background(), &pb.Heartbeat{Timestamp: timestamp.Increment()})
+			_, hearbeatErr := bullyServiceClient.SendHeartbeat(context.Background(), &pb.Heartbeat{Timestamp: timestamp.Increment(), FromPort: listenPort, Data: num})
 			if hearbeatErr != nil {
 				continue
 			}
@@ -190,21 +192,33 @@ func (s *BullyService) Coordinator(ctx context.Context, coordinatorRequest *pb.C
 	return &pb.Empty{}, nil
 }
 
-func (s *BullyService) AskForLeader(ctx context.Context, askRequest *pb.AskRequest) (*pb.LeaderPort, error) {
-	log.Println("Recieved message request. Timestamp:", timestamp.MaxInc(askRequest.Timestamp))
-	if !HasLeader() {
-		return nil, errors.New("no leader selected yet")
-	}
-	return &pb.LeaderPort{LeaderPort: leaderPort}, nil
+func (s *BullyService) AliveCheck(ctx context.Context, askRequest *pb.Empty) (*pb.Empty, error) {
+	log.Println("Recieved alive request. Timestamp:", timestamp.Increment())
+	return &pb.Empty{}, nil
 }
 
 func (s *BullyService) SendHeartbeat(ctx context.Context, heartbeat *pb.Heartbeat) (*pb.Empty, error) {
-	log.Printf("Recieved heartbeat from %d. Timestamp: %d", heartbeat.FromPort, timestamp.MaxInc(heartbeat.Timestamp))
+	log.Printf("Recieved heartbeat from %d with new num = %d. Timestamp: %d", heartbeat.FromPort, heartbeat.Data, timestamp.MaxInc(heartbeat.Timestamp))
 	lastRequestTimeFromLeader = time.Now()
+	num = heartbeat.Data
 	return &pb.Empty{}, nil
 }
 
-func (s *BullyService) ShareData(ctx context.Context, data *pb.Data) (*pb.Empty, error) {
-	log.Println("Recieved message request. Timestamp:", timestamp.MaxInc(data.Timestamp))
-	return &pb.Empty{}, nil
+func (s *BullyService) Increment(ctx context.Context, data *pb.Empty) (*pb.Value, error) {
+	log.Println("Recieved increment request. Timestamp:", timestamp.Increment())
+	if leaderPort == listenPort {
+		num++
+		return &pb.Value{Value: num}, nil
+	}
+	address := "localhost:" + strconv.Itoa(int(leaderPort))
+	_connection, err := grpc.Dial(address, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Failed to connect: %v", err)
+	}
+	defer _connection.Close()
+
+	bullyServiceClient := pb.NewBullyServiceClient(_connection)
+	response, err := bullyServiceClient.Increment(context.Background(), &pb.Empty{})
+
+	return response, err
 }

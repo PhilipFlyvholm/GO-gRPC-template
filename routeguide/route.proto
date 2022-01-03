@@ -7,9 +7,9 @@ package routeguide;
 service BullyService {
     rpc Election(ElectionRequest) returns (ElectionReply) {}
     rpc Coordinator(CoordinatorRequest) returns (Empty) {}
-    rpc AskForLeader(AskRequest) returns (LeaderPort) {}
+    rpc AliveCheck(Empty) returns (Empty) {}
     rpc SendHeartbeat(Heartbeat) returns (Empty) {}
-    rpc ShareData(Data) returns (Empty) {}
+    rpc Increment(Empty) returns (Value) {}
 }
 
 
@@ -29,6 +29,7 @@ message CoordinatorRequest {
 message Heartbeat{
     int32 timestamp = 1;
     int32 fromPort = 2;
+    int32 data = 3;
 }
 
 message Empty {}
@@ -43,20 +44,10 @@ message LeaderRequest {
     int32 timestamp = 3;
 }
 
-message AskRequest {
-    int32 status = 1;
-    int32 timestamp = 2;
-}
-
-message LeaderPort {
-    int32 leaderPort = 1;
-}
-
 message HeartbeatResponse {
     int32 status = 1;
 }
 
-message Data {
-    int32 currentNum = 1;
-    int32 timestamp = 2;
+message Value {
+    int32 value = 1;
 }
