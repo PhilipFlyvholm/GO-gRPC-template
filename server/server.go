@@ -29,7 +29,7 @@ type BullyService struct {
 }
 
 func main() {
-	log.Println("Starting Bully service by the team Fiji (Philip Kristian Møller Flyvholm, Tue Edmund Gyhrs and Thor Tudal Lauridsen")
+	log.Println("Starting Bully service by the team Fiji (Philip Kristian Møller Flyvholm, Tue Edmund Gyhrs and Thor Tudal Lauridsen)")
 	leaderPort = -1
 	num = -1
 	setupServerPort()
