@@ -20,433 +20,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ElectionRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Requester int32 `protobuf:"varint,1,opt,name=requester,proto3" json:"requester,omitempty"`
-	Timestamp int32 `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-}
-
-func (x *ElectionRequest) Reset() {
-	*x = ElectionRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[0]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ElectionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ElectionRequest) ProtoMessage() {}
-
-func (x *ElectionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[0]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ElectionRequest.ProtoReflect.Descriptor instead.
-func (*ElectionRequest) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *ElectionRequest) GetRequester() int32 {
-	if x != nil {
-		return x.Requester
-	}
-	return 0
-}
-
-func (x *ElectionRequest) GetTimestamp() int32 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
-type ElectionReply struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Replier int32 `protobuf:"varint,1,opt,name=replier,proto3" json:"replier,omitempty"`
-}
-
-func (x *ElectionReply) Reset() {
-	*x = ElectionReply{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[1]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ElectionReply) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ElectionReply) ProtoMessage() {}
-
-func (x *ElectionReply) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[1]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ElectionReply.ProtoReflect.Descriptor instead.
-func (*ElectionReply) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *ElectionReply) GetReplier() int32 {
-	if x != nil {
-		return x.Replier
-	}
-	return 0
-}
-
-type CoordinatorRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Coordinator int32 `protobuf:"varint,1,opt,name=coordinator,proto3" json:"coordinator,omitempty"`
-	Timestamp   int32 `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-}
-
-func (x *CoordinatorRequest) Reset() {
-	*x = CoordinatorRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *CoordinatorRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CoordinatorRequest) ProtoMessage() {}
-
-func (x *CoordinatorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CoordinatorRequest.ProtoReflect.Descriptor instead.
-func (*CoordinatorRequest) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *CoordinatorRequest) GetCoordinator() int32 {
-	if x != nil {
-		return x.Coordinator
-	}
-	return 0
-}
-
-func (x *CoordinatorRequest) GetTimestamp() int32 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
-type Heartbeat struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Timestamp int32 `protobuf:"varint,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	FromPort  int32 `protobuf:"varint,2,opt,name=fromPort,proto3" json:"fromPort,omitempty"`
-	Data      int32 `protobuf:"varint,3,opt,name=data,proto3" json:"data,omitempty"`
-}
-
-func (x *Heartbeat) Reset() {
-	*x = Heartbeat{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Heartbeat) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Heartbeat) ProtoMessage() {}
-
-func (x *Heartbeat) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Heartbeat.ProtoReflect.Descriptor instead.
-func (*Heartbeat) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *Heartbeat) GetTimestamp() int32 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
-func (x *Heartbeat) GetFromPort() int32 {
-	if x != nil {
-		return x.FromPort
-	}
-	return 0
-}
-
-func (x *Heartbeat) GetData() int32 {
-	if x != nil {
-		return x.Data
-	}
-	return 0
-}
-
-type Empty struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *Empty) Reset() {
-	*x = Empty{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *Empty) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Empty) ProtoMessage() {}
-
-func (x *Empty) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Empty.ProtoReflect.Descriptor instead.
-func (*Empty) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{4}
-}
-
-type LeadershipRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	CurrentLeader int32 `protobuf:"varint,1,opt,name=currentLeader,proto3" json:"currentLeader,omitempty"`
-}
-
-func (x *LeadershipRequest) Reset() {
-	*x = LeadershipRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *LeadershipRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LeadershipRequest) ProtoMessage() {}
-
-func (x *LeadershipRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LeadershipRequest.ProtoReflect.Descriptor instead.
-func (*LeadershipRequest) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *LeadershipRequest) GetCurrentLeader() int32 {
-	if x != nil {
-		return x.CurrentLeader
-	}
-	return 0
-}
-
-type LeaderRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	CurrentLeader int32 `protobuf:"varint,1,opt,name=currentLeader,proto3" json:"currentLeader,omitempty"`
-	LowestPort    int32 `protobuf:"varint,2,opt,name=lowestPort,proto3" json:"lowestPort,omitempty"`
-	Timestamp     int32 `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-}
-
-func (x *LeaderRequest) Reset() {
-	*x = LeaderRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[6]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *LeaderRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LeaderRequest) ProtoMessage() {}
-
-func (x *LeaderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[6]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LeaderRequest.ProtoReflect.Descriptor instead.
-func (*LeaderRequest) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *LeaderRequest) GetCurrentLeader() int32 {
-	if x != nil {
-		return x.CurrentLeader
-	}
-	return 0
-}
-
-func (x *LeaderRequest) GetLowestPort() int32 {
-	if x != nil {
-		return x.LowestPort
-	}
-	return 0
-}
-
-func (x *LeaderRequest) GetTimestamp() int32 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
-type HeartbeatResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Status int32 `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
-}
-
-func (x *HeartbeatResponse) Reset() {
-	*x = HeartbeatResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[7]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *HeartbeatResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HeartbeatResponse) ProtoMessage() {}
-
-func (x *HeartbeatResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[7]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HeartbeatResponse.ProtoReflect.Descriptor instead.
-func (*HeartbeatResponse) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *HeartbeatResponse) GetStatus() int32 {
-	if x != nil {
-		return x.Status
-	}
-	return 0
-}
-
 type Value struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	Value int32 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	Time  int32 `protobuf:"varint,2,opt,name=time,proto3" json:"time,omitempty"`
 }
 
 func (x *Value) Reset() {
 	*x = Value{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_routeguide_route_proto_msgTypes[8]
+		mi := &file_routeguide_route_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -459,7 +45,7 @@ func (x *Value) String() string {
 func (*Value) ProtoMessage() {}
 
 func (x *Value) ProtoReflect() protoreflect.Message {
-	mi := &file_routeguide_route_proto_msgTypes[8]
+	mi := &file_routeguide_route_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -472,7 +58,7 @@ func (x *Value) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Value.ProtoReflect.Descriptor instead.
 func (*Value) Descriptor() ([]byte, []int) {
-	return file_routeguide_route_proto_rawDescGZIP(), []int{8}
+	return file_routeguide_route_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Value) GetValue() int32 {
@@ -482,68 +68,81 @@ func (x *Value) GetValue() int32 {
 	return 0
 }
 
+func (x *Value) GetTime() int32 {
+	if x != nil {
+		return x.Time
+	}
+	return 0
+}
+
+type Timestamp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Time int32 `protobuf:"varint,1,opt,name=time,proto3" json:"time,omitempty"`
+}
+
+func (x *Timestamp) Reset() {
+	*x = Timestamp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_routeguide_route_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Timestamp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Timestamp) ProtoMessage() {}
+
+func (x *Timestamp) ProtoReflect() protoreflect.Message {
+	mi := &file_routeguide_route_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Timestamp.ProtoReflect.Descriptor instead.
+func (*Timestamp) Descriptor() ([]byte, []int) {
+	return file_routeguide_route_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Timestamp) GetTime() int32 {
+	if x != nil {
+		return x.Time
+	}
+	return 0
+}
+
 var File_routeguide_route_proto protoreflect.FileDescriptor
 
 var file_routeguide_route_proto_rawDesc = []byte{
 	0x0a, 0x16, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2f, 0x72, 0x6f, 0x75,
 	0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0a, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67,
-	0x75, 0x69, 0x64, 0x65, 0x22, 0x4d, 0x0a, 0x0f, 0x45, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x72, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x72, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
-	0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74,
-	0x61, 0x6d, 0x70, 0x22, 0x29, 0x0a, 0x0d, 0x45, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x65, 0x70, 0x6c, 0x79, 0x12, 0x18, 0x0a, 0x07, 0x72, 0x65, 0x70, 0x6c, 0x69, 0x65, 0x72, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x07, 0x72, 0x65, 0x70, 0x6c, 0x69, 0x65, 0x72, 0x22, 0x54,
-	0x0a, 0x12, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x63, 0x6f, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x61,
-	0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x63, 0x6f, 0x6f, 0x72, 0x64,
-	0x69, 0x6e, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74,
-	0x61, 0x6d, 0x70, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73,
-	0x74, 0x61, 0x6d, 0x70, 0x22, 0x59, 0x0a, 0x09, 0x48, 0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61,
-	0x74, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12,
-	0x1a, 0x0a, 0x08, 0x66, 0x72, 0x6f, 0x6d, 0x50, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x05, 0x52, 0x08, 0x66, 0x72, 0x6f, 0x6d, 0x50, 0x6f, 0x72, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x64,
-	0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22,
-	0x07, 0x0a, 0x05, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x39, 0x0a, 0x11, 0x4c, 0x65, 0x61, 0x64,
-	0x65, 0x72, 0x73, 0x68, 0x69, 0x70, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a,
-	0x0d, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61,
-	0x64, 0x65, 0x72, 0x22, 0x73, 0x0a, 0x0d, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x24, 0x0a, 0x0d, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6e, 0x74, 0x4c,
-	0x65, 0x61, 0x64, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0d, 0x63, 0x75, 0x72,
-	0x72, 0x65, 0x6e, 0x74, 0x4c, 0x65, 0x61, 0x64, 0x65, 0x72, 0x12, 0x1e, 0x0a, 0x0a, 0x6c, 0x6f,
-	0x77, 0x65, 0x73, 0x74, 0x50, 0x6f, 0x72, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0a,
-	0x6c, 0x6f, 0x77, 0x65, 0x73, 0x74, 0x50, 0x6f, 0x72, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x74, 0x69,
-	0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x74,
-	0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0x2b, 0x0a, 0x11, 0x48, 0x65, 0x61, 0x72,
-	0x74, 0x62, 0x65, 0x61, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a,
-	0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x73,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x1d, 0x0a, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14,
-	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x76,
-	0x61, 0x6c, 0x75, 0x65, 0x32, 0xc0, 0x02, 0x0a, 0x0c, 0x42, 0x75, 0x6c, 0x6c, 0x79, 0x53, 0x65,
-	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x44, 0x0a, 0x08, 0x45, 0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f,
-	0x6e, 0x12, 0x1b, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x45,
-	0x6c, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x19,
-	0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x45, 0x6c, 0x65, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x42, 0x0a, 0x0b, 0x43,
-	0x6f, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x1e, 0x2e, 0x72, 0x6f, 0x75,
-	0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x43, 0x6f, 0x6f, 0x72, 0x64, 0x69, 0x6e, 0x61,
-	0x74, 0x6f, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x72, 0x6f, 0x75,
-	0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x12,
-	0x34, 0x0a, 0x0a, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x12, 0x11, 0x2e,
-	0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
-	0x1a, 0x11, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x45, 0x6d,
-	0x70, 0x74, 0x79, 0x22, 0x00, 0x12, 0x3b, 0x0a, 0x0d, 0x53, 0x65, 0x6e, 0x64, 0x48, 0x65, 0x61,
-	0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x12, 0x15, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75,
-	0x69, 0x64, 0x65, 0x2e, 0x48, 0x65, 0x61, 0x72, 0x74, 0x62, 0x65, 0x61, 0x74, 0x1a, 0x11, 0x2e,
-	0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
-	0x22, 0x00, 0x12, 0x33, 0x0a, 0x09, 0x49, 0x6e, 0x63, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12,
-	0x11, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x45, 0x6d, 0x70,
-	0x74, 0x79, 0x1a, 0x11, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e,
-	0x56, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x00, 0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x2f, 0x72, 0x6f, 0x75,
-	0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x75, 0x69, 0x64, 0x65, 0x22, 0x31, 0x0a, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12, 0x14, 0x0a,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
+	0x05, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x22, 0x1f, 0x0a, 0x09, 0x54, 0x69, 0x6d, 0x65, 0x73,
+	0x74, 0x61, 0x6d, 0x70, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x04, 0x74, 0x69, 0x6d, 0x65, 0x32, 0x89, 0x01, 0x0a, 0x10, 0x49, 0x6e, 0x63,
+	0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3c, 0x0a,
+	0x0a, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x12, 0x15, 0x2e, 0x72, 0x6f,
+	0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61,
+	0x6d, 0x70, 0x1a, 0x15, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e,
+	0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x22, 0x00, 0x12, 0x37, 0x0a, 0x09, 0x49,
+	0x6e, 0x63, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x12, 0x15, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65,
+	0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x1a,
+	0x11, 0x2e, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67, 0x75, 0x69, 0x64, 0x65, 0x2e, 0x56, 0x61, 0x6c,
+	0x75, 0x65, 0x22, 0x00, 0x42, 0x0e, 0x5a, 0x0c, 0x2e, 0x2f, 0x72, 0x6f, 0x75, 0x74, 0x65, 0x67,
+	0x75, 0x69, 0x64, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -558,31 +157,18 @@ func file_routeguide_route_proto_rawDescGZIP() []byte {
 	return file_routeguide_route_proto_rawDescData
 }
 
-var file_routeguide_route_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_routeguide_route_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_routeguide_route_proto_goTypes = []interface{}{
-	(*ElectionRequest)(nil),    // 0: routeguide.ElectionRequest
-	(*ElectionReply)(nil),      // 1: routeguide.ElectionReply
-	(*CoordinatorRequest)(nil), // 2: routeguide.CoordinatorRequest
-	(*Heartbeat)(nil),          // 3: routeguide.Heartbeat
-	(*Empty)(nil),              // 4: routeguide.Empty
-	(*LeadershipRequest)(nil),  // 5: routeguide.LeadershipRequest
-	(*LeaderRequest)(nil),      // 6: routeguide.LeaderRequest
-	(*HeartbeatResponse)(nil),  // 7: routeguide.HeartbeatResponse
-	(*Value)(nil),              // 8: routeguide.Value
+	(*Value)(nil),     // 0: routeguide.Value
+	(*Timestamp)(nil), // 1: routeguide.Timestamp
 }
 var file_routeguide_route_proto_depIdxs = []int32{
-	0, // 0: routeguide.BullyService.Election:input_type -> routeguide.ElectionRequest
-	2, // 1: routeguide.BullyService.Coordinator:input_type -> routeguide.CoordinatorRequest
-	4, // 2: routeguide.BullyService.AliveCheck:input_type -> routeguide.Empty
-	3, // 3: routeguide.BullyService.SendHeartbeat:input_type -> routeguide.Heartbeat
-	4, // 4: routeguide.BullyService.Increment:input_type -> routeguide.Empty
-	1, // 5: routeguide.BullyService.Election:output_type -> routeguide.ElectionReply
-	4, // 6: routeguide.BullyService.Coordinator:output_type -> routeguide.Empty
-	4, // 7: routeguide.BullyService.AliveCheck:output_type -> routeguide.Empty
-	4, // 8: routeguide.BullyService.SendHeartbeat:output_type -> routeguide.Empty
-	8, // 9: routeguide.BullyService.Increment:output_type -> routeguide.Value
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
+	1, // 0: routeguide.IncrementService.AliveCheck:input_type -> routeguide.Timestamp
+	1, // 1: routeguide.IncrementService.Increment:input_type -> routeguide.Timestamp
+	1, // 2: routeguide.IncrementService.AliveCheck:output_type -> routeguide.Timestamp
+	0, // 3: routeguide.IncrementService.Increment:output_type -> routeguide.Value
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -595,7 +181,7 @@ func file_routeguide_route_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_routeguide_route_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ElectionRequest); i {
+			switch v := v.(*Value); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -607,91 +193,7 @@ func file_routeguide_route_proto_init() {
 			}
 		}
 		file_routeguide_route_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ElectionReply); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_routeguide_route_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CoordinatorRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_routeguide_route_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Heartbeat); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_routeguide_route_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Empty); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_routeguide_route_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LeadershipRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_routeguide_route_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*LeaderRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_routeguide_route_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*HeartbeatResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_routeguide_route_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Value); i {
+			switch v := v.(*Timestamp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -709,7 +211,7 @@ func file_routeguide_route_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_routeguide_route_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -14,230 +14,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// BullyServiceClient is the client API for BullyService service.
+// IncrementServiceClient is the client API for IncrementService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type BullyServiceClient interface {
-	Election(ctx context.Context, in *ElectionRequest, opts ...grpc.CallOption) (*ElectionReply, error)
-	Coordinator(ctx context.Context, in *CoordinatorRequest, opts ...grpc.CallOption) (*Empty, error)
-	AliveCheck(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
-	SendHeartbeat(ctx context.Context, in *Heartbeat, opts ...grpc.CallOption) (*Empty, error)
-	Increment(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Value, error)
+type IncrementServiceClient interface {
+	AliveCheck(ctx context.Context, in *Timestamp, opts ...grpc.CallOption) (*Timestamp, error)
+	Increment(ctx context.Context, in *Timestamp, opts ...grpc.CallOption) (*Value, error)
 }
 
-type bullyServiceClient struct {
+type incrementServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewBullyServiceClient(cc grpc.ClientConnInterface) BullyServiceClient {
-	return &bullyServiceClient{cc}
+func NewIncrementServiceClient(cc grpc.ClientConnInterface) IncrementServiceClient {
+	return &incrementServiceClient{cc}
 }
 
-func (c *bullyServiceClient) Election(ctx context.Context, in *ElectionRequest, opts ...grpc.CallOption) (*ElectionReply, error) {
-	out := new(ElectionReply)
-	err := c.cc.Invoke(ctx, "/routeguide.BullyService/Election", in, out, opts...)
+func (c *incrementServiceClient) AliveCheck(ctx context.Context, in *Timestamp, opts ...grpc.CallOption) (*Timestamp, error) {
+	out := new(Timestamp)
+	err := c.cc.Invoke(ctx, "/routeguide.IncrementService/AliveCheck", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *bullyServiceClient) Coordinator(ctx context.Context, in *CoordinatorRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/routeguide.BullyService/Coordinator", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *bullyServiceClient) AliveCheck(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/routeguide.BullyService/AliveCheck", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *bullyServiceClient) SendHeartbeat(ctx context.Context, in *Heartbeat, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/routeguide.BullyService/SendHeartbeat", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *bullyServiceClient) Increment(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Value, error) {
+func (c *incrementServiceClient) Increment(ctx context.Context, in *Timestamp, opts ...grpc.CallOption) (*Value, error) {
 	out := new(Value)
-	err := c.cc.Invoke(ctx, "/routeguide.BullyService/Increment", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/routeguide.IncrementService/Increment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// BullyServiceServer is the server API for BullyService service.
-// All implementations must embed UnimplementedBullyServiceServer
+// IncrementServiceServer is the server API for IncrementService service.
+// All implementations must embed UnimplementedIncrementServiceServer
 // for forward compatibility
-type BullyServiceServer interface {
-	Election(context.Context, *ElectionRequest) (*ElectionReply, error)
-	Coordinator(context.Context, *CoordinatorRequest) (*Empty, error)
-	AliveCheck(context.Context, *Empty) (*Empty, error)
-	SendHeartbeat(context.Context, *Heartbeat) (*Empty, error)
-	Increment(context.Context, *Empty) (*Value, error)
-	mustEmbedUnimplementedBullyServiceServer()
+type IncrementServiceServer interface {
+	AliveCheck(context.Context, *Timestamp) (*Timestamp, error)
+	Increment(context.Context, *Timestamp) (*Value, error)
+	mustEmbedUnimplementedIncrementServiceServer()
 }
 
-// UnimplementedBullyServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedBullyServiceServer struct {
+// UnimplementedIncrementServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedIncrementServiceServer struct {
 }
 
-func (UnimplementedBullyServiceServer) Election(context.Context, *ElectionRequest) (*ElectionReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Election not implemented")
-}
-func (UnimplementedBullyServiceServer) Coordinator(context.Context, *CoordinatorRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Coordinator not implemented")
-}
-func (UnimplementedBullyServiceServer) AliveCheck(context.Context, *Empty) (*Empty, error) {
+func (UnimplementedIncrementServiceServer) AliveCheck(context.Context, *Timestamp) (*Timestamp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AliveCheck not implemented")
 }
-func (UnimplementedBullyServiceServer) SendHeartbeat(context.Context, *Heartbeat) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendHeartbeat not implemented")
-}
-func (UnimplementedBullyServiceServer) Increment(context.Context, *Empty) (*Value, error) {
+func (UnimplementedIncrementServiceServer) Increment(context.Context, *Timestamp) (*Value, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Increment not implemented")
 }
-func (UnimplementedBullyServiceServer) mustEmbedUnimplementedBullyServiceServer() {}
+func (UnimplementedIncrementServiceServer) mustEmbedUnimplementedIncrementServiceServer() {}
 
-// UnsafeBullyServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to BullyServiceServer will
+// UnsafeIncrementServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to IncrementServiceServer will
 // result in compilation errors.
-type UnsafeBullyServiceServer interface {
-	mustEmbedUnimplementedBullyServiceServer()
+type UnsafeIncrementServiceServer interface {
+	mustEmbedUnimplementedIncrementServiceServer()
 }
 
-func RegisterBullyServiceServer(s grpc.ServiceRegistrar, srv BullyServiceServer) {
-	s.RegisterService(&BullyService_ServiceDesc, srv)
+func RegisterIncrementServiceServer(s grpc.ServiceRegistrar, srv IncrementServiceServer) {
+	s.RegisterService(&IncrementService_ServiceDesc, srv)
 }
 
-func _BullyService_Election_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ElectionRequest)
+func _IncrementService_AliveCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Timestamp)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BullyServiceServer).Election(ctx, in)
+		return srv.(IncrementServiceServer).AliveCheck(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/routeguide.BullyService/Election",
+		FullMethod: "/routeguide.IncrementService/AliveCheck",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).Election(ctx, req.(*ElectionRequest))
+		return srv.(IncrementServiceServer).AliveCheck(ctx, req.(*Timestamp))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BullyService_Coordinator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CoordinatorRequest)
+func _IncrementService_Increment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Timestamp)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BullyServiceServer).Coordinator(ctx, in)
+		return srv.(IncrementServiceServer).Increment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/routeguide.BullyService/Coordinator",
+		FullMethod: "/routeguide.IncrementService/Increment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).Coordinator(ctx, req.(*CoordinatorRequest))
+		return srv.(IncrementServiceServer).Increment(ctx, req.(*Timestamp))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BullyService_AliveCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BullyServiceServer).AliveCheck(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/routeguide.BullyService/AliveCheck",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).AliveCheck(ctx, req.(*Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BullyService_SendHeartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Heartbeat)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BullyServiceServer).SendHeartbeat(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/routeguide.BullyService/SendHeartbeat",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).SendHeartbeat(ctx, req.(*Heartbeat))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BullyService_Increment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BullyServiceServer).Increment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/routeguide.BullyService/Increment",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BullyServiceServer).Increment(ctx, req.(*Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// BullyService_ServiceDesc is the grpc.ServiceDesc for BullyService service.
+// IncrementService_ServiceDesc is the grpc.ServiceDesc for IncrementService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var BullyService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "routeguide.BullyService",
-	HandlerType: (*BullyServiceServer)(nil),
+var IncrementService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "routeguide.IncrementService",
+	HandlerType: (*IncrementServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Election",
-			Handler:    _BullyService_Election_Handler,
-		},
-		{
-			MethodName: "Coordinator",
-			Handler:    _BullyService_Coordinator_Handler,
-		},
-		{
 			MethodName: "AliveCheck",
-			Handler:    _BullyService_AliveCheck_Handler,
-		},
-		{
-			MethodName: "SendHeartbeat",
-			Handler:    _BullyService_SendHeartbeat_Handler,
+			Handler:    _IncrementService_AliveCheck_Handler,
 		},
 		{
 			MethodName: "Increment",
-			Handler:    _BullyService_Increment_Handler,
+			Handler:    _IncrementService_Increment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

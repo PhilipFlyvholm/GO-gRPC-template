@@ -11,11 +11,11 @@ import (
 	"google.golang.org/grpc"
 )
 
-var client pb.BullyServiceClient
-var serverPorts = [3]int{5000, 5001, 5002}
+var client pb.IncrementServiceClient
+var frontendPorts = [2]int{3000, 3001}
 
 func main() {
-	connection := findActiveServer()
+	connection := findActiveFrontend()
 	defer connection.Close()
 	Increment()
 }
@@ -27,40 +27,40 @@ func connect(port int) *grpc.ClientConn {
 		log.Println(address, "not active -", err)
 		return nil
 	}
-	_client := pb.NewBullyServiceClient(connection)
+	_client := pb.NewIncrementServiceClient(connection)
 	client = _client
 	return connection
 }
 
-func findActiveServer() *grpc.ClientConn {
+func findActiveFrontend() *grpc.ClientConn {
 	client = nil
-	for i := 0; i < len(serverPorts); i++ {
-		connection := connect(serverPorts[i])
-		log.Printf("Checking port %d", serverPorts[i])
-		_, err := client.AliveCheck(context.Background(), &pb.Empty{})
+	for i := 0; i < len(frontendPorts); i++ {
+		connection := connect(frontendPorts[i])
+		log.Printf("Checking port %d", frontendPorts[i])
+		_, err := client.AliveCheck(context.Background(), &pb.Timestamp{})
 		if err != nil {
-			log.Printf("Server with port: %d not running", serverPorts[i])
+			log.Printf("Frontend with port: %d not running", frontendPorts[i])
 			log.Println(err)
 		} else {
-			log.Printf("Found connection with port: %d", serverPorts[i])
+			log.Printf("Found connection with port: %d", frontendPorts[i])
 			return connection
 		}
 	}
-	log.Fatalln("No active servers")
+	log.Fatalln("No active frontends")
 	return nil
 }
 
 func Increment() {
-	response, err := client.Increment(context.Background(), &pb.Empty{})
+	response, err := client.Increment(context.Background(), &pb.Timestamp{})
 	if err != nil {
-		log.Println("Connection lost. Finding new server")
-		connection := findActiveServer()
+		log.Println("Connection lost. Finding new frontend")
+		connection := findActiveFrontend()
 		if connection == nil {
-			log.Fatalln("No active servers")
+			log.Fatalln("No active frontends")
 			return
 		}
 
-		log.Println("Found new server")
+		log.Println("Found new frontend")
 
 		Increment()
 	} else {

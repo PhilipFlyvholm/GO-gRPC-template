@@ -14,7 +14,14 @@ go run ./server/server.go 1
 go run ./server/server.go 2
 ```
 
-## Client server:
+## Frontend commands:
+
+```
+go run ./frontend/frontend.go 0
+go run ./frontend/frontend.go 1
+```
+
+## Client commands:
 
 ```
 go run ./client/client.go

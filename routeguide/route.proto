@@ -4,50 +4,16 @@ option go_package = "./routeguide";
 
 package routeguide;
 
-service BullyService {
-    rpc Election(ElectionRequest) returns (ElectionReply) {}
-    rpc Coordinator(CoordinatorRequest) returns (Empty) {}
-    rpc AliveCheck(Empty) returns (Empty) {}
-    rpc SendHeartbeat(Heartbeat) returns (Empty) {}
-    rpc Increment(Empty) returns (Value) {}
-}
-
-
-message ElectionRequest {
-    int32 requester = 1;
-    int32 timestamp = 2;
-}
-
-message ElectionReply {
-    int32 replier = 1;
-}
-
-message CoordinatorRequest {
-    int32 coordinator = 1;
-    int32 timestamp = 2;
-}
-message Heartbeat{
-    int32 timestamp = 1;
-    int32 fromPort = 2;
-    int32 data = 3;
-}
-
-message Empty {}
-
-message LeadershipRequest {
-    int32 currentLeader = 1;
-}
-
-message LeaderRequest {
-    int32 currentLeader = 1;
-    int32 lowestPort = 2;
-    int32 timestamp = 3;
-}
-
-message HeartbeatResponse {
-    int32 status = 1;
+service IncrementService {
+    rpc AliveCheck(Timestamp) returns (Timestamp) {}
+    rpc Increment(Timestamp) returns (Value) {}
 }
 
 message Value {
     int32 value = 1;
+    int32 time = 2;
+}
+
+message Timestamp {
+    int32 time = 1;
 }
